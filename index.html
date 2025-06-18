@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rounded Text Generator</title>
+  <meta charset="utf-8">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript libraries -->
+  <!-- Capture HTML elements as an image -->
+  <script defer src="https://cdn.jsdelivr.net/gh/tsayen/dom-to-image/src/dom-to-image.min.js"></script>
+  <!-- Easily write HTML in JS -->
+  <script defer src="https://cdn.jsdelivr.net/gh/Vectorized/Aris/aris.min.js"></script>
+</head>
+
+<body>
+  <div id="box" data-align="center"></div>
+
+  <div id="text-inputs">
+    <textarea id="text" rows="8">This is a text line 😀
+This is another text line
+This is short
+This is somewhat longer
+This isn't</textarea>
+  </div>
+
+  <div id="align-inputs">
+    <input type="radio" name="align" id="align-left" value="left">
+    <label for="align-left">Align left</label>
+    <input type="radio" name="align" id="align-center" value="center" checked>
+    <label for="align-center">Align center</label>
+    <input type="radio" name="align" id="align-right" value="right">
+    <label for="align-right">Align right</label>
+  </div>
+
+  <div id="color-inputs"></div>
+
+  <div id="misc-inputs">
+    <input type="checkbox" id="misc-transparent-bg" name="transparent-bg">
+    <label for="misc-transparent-bg">Transparent background</label>
+  </div>
+
+  <button id="button-create">Create Image</button>
+
+  <script defer src="script.js"></script>
+</body>
+
+</html>
