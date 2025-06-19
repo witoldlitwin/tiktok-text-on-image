@@ -217,9 +217,6 @@ async function createTextOnImage(options) {
             const lineEl = document.createElement('div');
             lineEl.className = 'line';
 
-            // Calculate actual font size
-            const actualFontSize = 20 * lineScale;
-
             lineEl.style.cssText = `
                 --font-scale: ${lineScale};
                 --border-radius: 0.2em;
@@ -227,7 +224,7 @@ async function createTextOnImage(options) {
                 background-color: ${bgColor};
                 color: ${fgColor};
                 font-family: "Montserrat SemiBold", Arial, sans-serif;
-                font-size: ${actualFontSize}px;
+                font-size: calc(28px * var(--font-scale));
                 width: fit-content;
                 padding: 0.4em 0.8em;
                 border-radius: 0.2em;

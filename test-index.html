@@ -83,7 +83,7 @@ This isn't</textarea>
 
   <div id="scale-inputs">
     <label for="scale-input">Text Scale:</label>
-    <input type="number" id="scale-input" min="1" max="5" step="0.5" value="2">
+    <input type="number" id="scale-input" min="1" max="5" step="0.5" value="1">
   </div>
 
   <button id="button-create">Create Image (Using text-to-image.js)</button>
@@ -130,7 +130,7 @@ This isn't</textarea>
           const customY = parseFloat(document.getElementById('custom-y').value) || 50;
           const colorName = document.getElementById('color-select').value;
           const transparentBackground = document.getElementById('misc-transparent-bg').checked;
-          const scale = parseFloat(document.getElementById('scale-input').value) || 2;
+          const scale = parseFloat(document.getElementById('scale-input').value) || 1;
 
           updateStatus('Calling createTextOnImage function...');
 
