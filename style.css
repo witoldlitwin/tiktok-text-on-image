@@ -186,6 +186,22 @@ label.color-label {
   margin: 20px 0;
 }
 
+#position-inputs {
+  margin: 20px 0;
+}
+
+#position-inputs label:first-child {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#custom-y {
+  width: 80px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
 #color-inputs {
   display: grid;
   grid-template-columns: repeat(auto-fill, 30px 50px);

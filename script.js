@@ -88,9 +88,33 @@ function removeAllChildNodes(el) {
     }
 }
 
+function calculateTextPosition(
+    position,
+    customY,
+    height,
+    totalTextHeight,
+    lines
+) {
+    const padding = 100;
+    if (!lines || lines.length === 0) return height / 2;
+
+    switch (position) {
+        case "top":
+            return padding;
+        case "bottom":
+            return height - padding - totalTextHeight;
+        case "custom":
+            return customY - (totalTextHeight / 2) || (height - totalTextHeight) / 2;
+        default: // center
+            return (height - totalTextHeight) / 2;
+    }
+}
+
 const boxEl = document.getElementById("box");
 const alignInputsEl = document.getElementById("align-inputs");
 const colorInputsEl = document.getElementById("color-inputs");
+const positionInputsEl = document.getElementById("position-inputs");
+const customYEl = document.getElementById("custom-y");
 const transparentBackgroundCheckboxEl = document.getElementById(
     "misc-transparent-bg"
 );
@@ -160,6 +184,21 @@ transparentBackgroundCheckboxEl.onchange = (evt) => {
         .querySelector("input[type=radio]:checked")
         .dispatchEvent(new Event("change"));
 };
+
+// Handle position input changes
+positionInputsEl.querySelectorAll("input[type=radio]").forEach((el) => {
+    el.onchange = (evt) => {
+        const isCustom = evt.target.value === "custom";
+        customYEl.disabled = !isCustom;
+        if (isCustom) {
+            customYEl.focus();
+        }
+    };
+
+    if (el.checked) {
+        el.dispatchEvent(new Event("change"));
+    }
+});
 
 textEl.onchange = (evt) => {
     removeAllChildNodes(boxEl);
@@ -275,11 +314,33 @@ createButtonEl.onclick = async (evt) => {
             // Load and draw text overlay
             const textImage = new Image();
             textImage.onload = () => {
-                // Calculate position to center the text overlay
-                const textX = (canvas.width - textImage.width) / 2;
-                const textY = (canvas.height - textImage.height) / 2;
+                // Get selected position
+                const selectedPosition = positionInputsEl.querySelector("input[type=radio]:checked").value;
+                const customYPercent = parseFloat(customYEl.value) || 50;
+                const customYPixels = (customYPercent / 100) * canvas.height;
 
-                // Draw text overlay centered on the background
+                // Parse text lines to get scaling information
+                const textLines = textEl.value.split("\n").map(line => {
+                    const [lineText, lineScale] = line.split("|");
+                    return {
+                        text: lineText,
+                        scale: parseFloat(lineScale) || 1
+                    };
+                });
+
+                // Calculate text positioning
+                const totalTextHeight = textImage.height;
+
+                const textX = (canvas.width - textImage.width) / 2;
+                const textY = calculateTextPosition(
+                    selectedPosition,
+                    customYPixels,
+                    canvas.height,
+                    totalTextHeight,
+                    textLines
+                );
+
+                // Draw text overlay at calculated position
                 ctx.drawImage(textImage, textX, textY);
 
                 // Convert canvas to blob and open
